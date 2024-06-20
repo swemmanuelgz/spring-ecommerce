@@ -1,5 +1,6 @@
 package com.curso.ecommerce.spring_ecommerce.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class ProductoServiceImpl implements ProductoService{
     @Override
     public void update(Producto producto) {
      productoRepository.save(producto); 
+    }
+
+    @Override
+    public List<Producto> findAll() {
+        return productoRepository.findAll();
     }
 
 }
