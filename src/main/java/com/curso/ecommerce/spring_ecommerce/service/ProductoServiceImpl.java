@@ -14,6 +14,8 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Autowired
     private ProductoRepository productoRepository;
+    
+    ProductoService productoService;
     @Override
     public void delete(Integer id) {
             productoRepository.deleteById(id);        
@@ -38,5 +40,13 @@ public class ProductoServiceImpl implements ProductoService{
     public List<Producto> findAll() {
         return productoRepository.findAll();
     }
+
+    @Override
+    public Producto findById(Integer id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    }
+
+    
 
 }

@@ -7,5 +7,5 @@ import com.curso.ecommerce.spring_ecommerce.model.Producto;
 
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
-
+    
 }
