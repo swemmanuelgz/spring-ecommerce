@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.engine.jdbc.env.internal.LobCreationLogging_.logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,13 +54,26 @@ public class HomeController {
         }
 
         @PostMapping("/cart")
-        public String addCart(@RequestParam Integer id,@RequestParam Integer cantidad){
+        public String addCart(@RequestParam Integer id,@RequestParam Integer cantidad,Model model){
             DetalleOrden detalleOrden = new DetalleOrden();
             Producto producto = new Producto();
             double sumaTotal =0;
             Optional<Producto> productOptional = productoService.get(id);
-            log.info(ProductoController.ANSI_GREEN+"Producto añadido: {}",productOptional.get());
             log.info(ProductoController.ANSI_GREEN+"\nID: "+id+" Cantidad: "+cantidad+ProductoController.ANSI_RESET);
+
+            producto = productOptional.get();
+            detalleOrden.setCantidad(cantidad);
+            detalleOrden.setPrecio(producto.getPrecio());
+            detalleOrden.setNombre(producto.getNombre());
+            detalleOrden.setTotal(producto.getPrecio()*cantidad);
+            detalleOrden.setProducto(producto);
+
+            detalles.add(detalleOrden);
+            sumaTotal = detalles.stream().mapToDouble(dt -> dt.getTotal()).sum();
+
+            orden.setTotal(sumaTotal);
+            model.addAttribute("cart", detalles);
+            model.addAttribute("orden", orden);
             return "usuario/carrito";
         }
 }
