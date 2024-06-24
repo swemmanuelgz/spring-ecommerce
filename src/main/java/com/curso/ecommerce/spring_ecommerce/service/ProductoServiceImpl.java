@@ -7,15 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.curso.ecommerce.spring_ecommerce.model.Producto;
-import com.curso.ecommerce.spring_ecommerce.repository.ProductoRepository;
+import com.curso.ecommerce.spring_ecommerce.repository.IProductoRepository;
 
 @Service
 public class ProductoServiceImpl implements ProductoService{
 
     @Autowired
-    private ProductoRepository productoRepository;
-    
-    ProductoService productoService;
+    private IProductoRepository productoRepository;
+
     @Override
     public void delete(Integer id) {
             productoRepository.deleteById(id);        
@@ -43,8 +42,7 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     public Producto findById(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        return productoRepository.findById(id).get();
     }
 
     

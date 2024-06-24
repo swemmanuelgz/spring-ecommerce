@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.curso.ecommerce.spring_ecommerce.model.Producto;
 import com.curso.ecommerce.spring_ecommerce.model.Usuario;
-import com.curso.ecommerce.spring_ecommerce.repository.ProductoRepository;
+import com.curso.ecommerce.spring_ecommerce.repository.IProductoRepository;
 import com.curso.ecommerce.spring_ecommerce.service.ProductoService;
 import com.curso.ecommerce.spring_ecommerce.service.ProductoServiceImpl;
 import com.curso.ecommerce.spring_ecommerce.service.UploadFileService;
@@ -35,7 +35,7 @@ public class ProductoController {
     private UploadFileService uploadFileService;
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private IProductoRepository productoRepository;
 
     @GetMapping
     public String show(Model model) {
