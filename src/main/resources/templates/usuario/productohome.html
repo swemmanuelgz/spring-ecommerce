@@ -12,11 +12,11 @@
 
 
   <!-- Bootstrap core CSS -->
- <!-- Bootstrap core CSS -->
- <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
- <!-- Custom styles for this template -->
- <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
 
@@ -27,87 +27,87 @@
     <div class="container">
       <a class="navbar-brand" href="#">Spring eCommerce</a>
 
-      <form class="form-inline my-2 my-lg-0" method="post"
-      action="#">
-      <input class="form-control mr-sm-2" type="search"
-      placeholder="Buscar" aria-label="Search" name="nombre"
-      autocomplete="off">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-    </form>
+      <form class="form-inline my-2 my-lg-0" method="post" action="#">
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" name="nombre"
+          autocomplete="off">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+      </form>
 
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a class="nav-link"
-          href="carrito.html">Carrito</a></li>
-          <li class="nav-item"><a class="nav-link"
-            href="login.html">Login</a></li>
-          </ul>
-        </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="carrito.html">Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- Page Content -->
-    <div class="container">
-
-
-      <!-- Page Heading/Breadcrumbs -->
-      <h1 class="mt-4 mb-3">
-        Spring eCommerce <small>Producto</small>
-      </h1>
-
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active">Producto</li>
-      </ol>
-
-      <!-- Blog Post -->
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-lg-6">
-              <a href="#"> <img class="img-fluid rounded"
-                src="http://placehold.it/500x325"  alt="">
-              </a>
-            </div>
-            <div class="col-lg-6">
-              <form action="carrito.html" method="POST">
-                <h2 class="card-title">Nombre producto</h2>
-
-                <ul class="list-group">
-                  <li class="list-group-item"><h5>Precio: </h5></li>
-                  <li class="list-group-item">
-                    <p>Descripción:</p>
-                  </li>
-                  <li class="list-group-item"><h6>
-                    Cantidad: <input type="number" id="cantidad" name="cantidad" autocomplete="off"
-                    min="1" max="5" value="1">
-                  </h6></li>
-                </ul>
+  <!-- Page Content -->
+  <div class="container">
 
 
-                <button type="submit"  class="btn btn-dark">Añadir al carrito </button>
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">
+      Spring eCommerce <small>Producto</small>
+    </h1>
 
-              </form>
-            </div>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+      <li class="breadcrumb-item active">Producto</li>
+    </ol>
+
+    <!-- Blog Post -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <a href="#"> <img class="img-fluid rounded" th:src="@{/images/{img} (img=${producto.imagen})}" alt="">
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <form action="carrito.html" method="POST">
+              <h2 class="card-title" th:text="${producto.nombre}"></h2>
+
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <h5 th:text=" 'Precio: '+ ${producto.precio}+ ' €' "></h5>
+                </li>
+                <li class="list-group-item">
+                  <p th:text=" 'Descripcion: ' +${producto.descripcion}"></p>
+                </li>
+                <li class="list-group-item">
+                  <h6>
+                    Cantidad: <input type="number" id="cantidad" name="cantidad" autocomplete="off" min="1" max="5"
+                      value="1">
+                  </h6>
+                </li>
+              </ul>
+
+
+              <button type="submit" class="btn btn-dark">Añadir al carrito </button>
+
+            </form>
           </div>
         </div>
       </div>
-
-
     </div>
-    <!-- /.container -->
 
-    <!-- Footer -->
-    <div th:include="usuario/template_usuario.html::footer"></div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  </div>
+  <!-- /.container -->
 
-  </body>
+  <!-- Footer -->
+  <div th:include="usuario/template_usuario.html::footer"></div>
 
-  </html>
+  <!-- Bootstrap core JavaScript -->
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+
+</html>
