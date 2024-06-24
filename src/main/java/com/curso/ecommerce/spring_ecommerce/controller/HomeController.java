@@ -109,7 +109,12 @@ public class HomeController {
         public String getCart(Model model){
             model.addAttribute("cart", detalles);
             model.addAttribute("orden", orden);
-            return "usuario/carrito";
+            return "/usuario/carrito";
         }
 
+        @GetMapping("/order")
+        public String order(){
+
+            return "/usuario/resumenorden";
+        }
 }
