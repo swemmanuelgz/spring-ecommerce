@@ -1,12 +1,15 @@
 package com.curso.ecommerce.spring_ecommerce.model;
 
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,8 +30,9 @@ public class Orden {
     private double total;
     @ManyToOne//relaciones foraneas
     private Usuario usuario;
-    @OneToOne(mappedBy = "orden") //Relaciones foraneas
-    private DetalleOrden detalle;
+
+    @OneToMany(mappedBy = "orden" ) //Relaciones foraneas
+    private List<DetalleOrden> detalle;
 
 
 }

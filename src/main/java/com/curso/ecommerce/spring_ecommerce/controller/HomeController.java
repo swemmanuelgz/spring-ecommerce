@@ -1,8 +1,10 @@
 package com.curso.ecommerce.spring_ecommerce.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ import com.curso.ecommerce.spring_ecommerce.model.DetalleOrden;
 import com.curso.ecommerce.spring_ecommerce.model.Orden;
 import com.curso.ecommerce.spring_ecommerce.model.Producto;
 import com.curso.ecommerce.spring_ecommerce.model.Usuario;
+import com.curso.ecommerce.spring_ecommerce.service.IDetalleOrdenService;
+import com.curso.ecommerce.spring_ecommerce.service.IOrdenService;
 import com.curso.ecommerce.spring_ecommerce.service.IUsuarioService;
 import com.curso.ecommerce.spring_ecommerce.service.ProductoService;
 
@@ -34,8 +38,14 @@ public class HomeController {
     @Autowired
     private IUsuarioService usuarioService;
 
+    @Autowired
+    private IOrdenService ordenService;
+
+    @Autowired
+    private IDetalleOrdenService detalleOrdenService;
+
         //para almacenar los detalles de la orden
-    List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
+    List<DetalleOrden> detalles = new ArrayList<>();
 
     //Datos de la orden
     Orden orden = new Orden();
@@ -125,5 +135,38 @@ public class HomeController {
             model.addAttribute("orden", orden);
             model.addAttribute("usuario", usuario);
             return "usuario/resumenorden";
+        }
+
+        @GetMapping("/saveOrder")
+        public String saveOrder(){
+            Date fechaCreacion = new Date();
+            orden.setFechaCreacion(fechaCreacion);
+            orden.setNumero(ordenService.generarNumeroOrden());
+
+            //usuario
+            Usuario usuario = usuarioService.findById(1).get();
+
+            orden.setUsuario(usuario);
+            ordenService.save(orden);
+
+            //guardar Detalles
+            for (DetalleOrden dt : detalles) {
+                dt.setOrden(orden);
+                detalleOrdenService.save(dt);
+            }
+
+            //limpieza de la lista y orden
+            orden = new Orden();
+            detalles.clear();
+
+            return "redirect:/";
+        }
+        @PostMapping("/search")
+        public String searchProduct(@RequestParam String nombre,Model model){
+            log.info( ProductoController.ANSI_GREEN+"\nBuscando {}", nombre+ProductoController.ANSI_RESET);
+            List<Producto> productos = productoService.findAll().stream()
+                    .filter(p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
+            model.addAttribute("productos", productos);
+            return "usuario/home";
         }
 }
