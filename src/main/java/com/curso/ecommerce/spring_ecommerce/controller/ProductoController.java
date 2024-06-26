@@ -18,9 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.curso.ecommerce.spring_ecommerce.model.Producto;
 import com.curso.ecommerce.spring_ecommerce.model.Usuario;
 import com.curso.ecommerce.spring_ecommerce.repository.IProductoRepository;
+import com.curso.ecommerce.spring_ecommerce.service.IUsuarioService;
 import com.curso.ecommerce.spring_ecommerce.service.ProductoService;
 import com.curso.ecommerce.spring_ecommerce.service.ProductoServiceImpl;
 import com.curso.ecommerce.spring_ecommerce.service.UploadFileService;
+import com.curso.ecommerce.spring_ecommerce.service.UsuarioServiceImpl;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/productos")
@@ -33,6 +37,9 @@ public class ProductoController {
 
     @Autowired
     private UploadFileService uploadFileService;
+
+    @Autowired
+    private IUsuarioService usuarioService;
 
     @Autowired
     private IProductoRepository productoRepository;
@@ -50,9 +57,9 @@ public class ProductoController {
     }
 
     @PostMapping("/save")
-    public String save(Producto producto,@RequestParam("img") MultipartFile file) throws IOException {
+    public String save(Producto producto,@RequestParam("img") MultipartFile file,HttpSession session) throws IOException {
         //logger.info("\nEste es el objeto producto{}",producto);
-        Usuario user = new Usuario(1, "", "", "", "", "", "", "");
+        Usuario user = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
         producto.setUsuario(user);
         //imagen 
         if (producto.getId()==null) { //Esta validacion se hace cuando se crea un producto
